@@ -1,46 +1,52 @@
 #include <iostream>
+#include <fstream>
+
 
 using namespace std;
 
-int main()
+void RecorridoAnchura(int iN, int iMatX[][20], int iArrX[])
 {
- int iCant, iNumero, iMatriz[50][50], iFila[50], iVec[50];
-    //Variables para leer el archivo
-    ifstream inArchivo;
-    string sArchivo;
-    
-    //Se pregunta por el nombre del archivo
-    cout << "Ingrese el nombre del archivo, no olvide poner '.txt' (nombre.txt) " << endl;
-    cin >> sArchivo;
-    
-    //Se abre el archivo para leer y obtener los datos
-    inArchivo.open(sArchivo.c_str()); //Checar el directorio
-    
-    inArchivo >> iCant;
-    inArchivo.ignore();
-    
-    while(inArchivo)
+    for(int iI= 0; iI<iN; iI++)
     {
-        for(int iI = 0; iI < iCant; iI++)
+        for(int iJ= 0; iJ<iN; iJ++)
         {
-            for(int iJ = 0; iJ < iCant; iJ++)
+            if(iMatX[iI][iJ]==1)
             {
-                inArchivo >> iMatriz[iI][iJ];
+                iArrX[iI]= iJ+1;
             }
         }
     }
-    //Se cierra el archivo
-    inArchivo.close();
-    
-    //Desplegar valores
-    cout << iCant << endl;
-    for(int iI = 0; iI < iCant; iI++)
+}
+
+int main()
+{
+    ifstream a("Adyacencia.txt");
+    int iN;
+    int iArrA[20];
+    int iMatA[20][20];
+    a>>iN;
+    for(int iI= 0; iI<iN; iI++)
     {
-        for(int iJ = 0; iJ < iCant; iJ++)
+        for(int iJ= 0; iJ<iN; iJ++)
         {
-            cout << iMatriz[iI][iJ];
+            a>> iMatA[iI][iJ];
         }
-        cout << endl;
     }
+
+    for(int iI= 0; iI<iN; iI++)
+    {
+        for(int iJ= 0; iJ<iN; iJ++)
+        {
+            cout<< iMatA[iI][iJ]<< " ";
+        }
+        cout<< endl;
+    }
+    RecorridoAnchura(iN, iMatA, iArrA);
+    for(int iI= 0; iI<iN; iI++)
+    {
+        cout<< iArrA[iI]<< " ";
+    }
+
+    return 0;
 
 }
